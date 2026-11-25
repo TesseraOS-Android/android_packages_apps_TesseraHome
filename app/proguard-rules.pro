@@ -1,0 +1,2 @@
+-keep class com.tesseraos.home.service.TesseraNotificationService { *; }
+-dontwarn kotlin.**
