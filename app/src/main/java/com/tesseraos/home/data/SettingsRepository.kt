@@ -1,6 +1,7 @@
 package com.tesseraos.home.data
 
 import android.content.Context
+import android.provider.Settings
 import com.tesseraos.home.model.AppEntry
 import com.tesseraos.home.model.LauncherSettings
 import com.tesseraos.home.model.TileItem
@@ -11,11 +12,19 @@ import org.json.JSONObject
 
 class SettingsRepository(context: Context) {
 
-    private val prefs = context.getSharedPreferences("tessera_home_prefs", Context.MODE_PRIVATE)
+    private val appContext = context.applicationContext
+    private val prefs = appContext.getSharedPreferences("tessera_home_prefs", Context.MODE_PRIVATE)
 
     fun loadSettings(): LauncherSettings {
+        val accentHex = prefs.getLong("accent_hex", MetroPalette.DefaultAccentHex)
+        val existingSystemAccent = runCatching {
+            Settings.Secure.getInt(appContext.contentResolver, "tessera_accent_color", 0)
+        }.getOrDefault(0)
+        if (existingSystemAccent == 0) {
+            syncSystemAccent(accentHex)
+        }
         return LauncherSettings(
-            accentColorHex = prefs.getLong("accent_hex", MetroPalette.DefaultAccentHex),
+            accentColorHex = accentHex,
             gridColumns = prefs.getInt("grid_columns", 4),
             parallaxEnabled = prefs.getBoolean("parallax_enabled", false),
             wallpaperUri = prefs.getString("wallpaper_uri", null),
@@ -35,6 +44,27 @@ class SettingsRepository(context: Context) {
             .putBoolean("turnstile_enabled", settings.turnstileEnabled)
             .putBoolean("live_flip_enabled", settings.liveFlipEnabled)
             .apply()
+        syncSystemAccent(settings.accentColorHex)
+    }
+
+    private fun syncSystemAccent(accentHex: Long) {
+        runCatching {
+            val argb = accentHex.toInt()
+            val hex6 = String.format("%06X", argb and 0xFFFFFF)
+            Settings.Secure.putInt(appContext.contentResolver, "tessera_accent_color", argb)
+            val overlayJson = JSONObject().apply {
+                put("android.theme.customization.system_palette", hex6)
+                put("android.theme.customization.accent_color", hex6)
+                put("android.theme.customization.color_source", "preset")
+                put("android.theme.customization.theme_style", "VIBRANT")
+                put("_applied_timestamp", System.currentTimeMillis())
+            }.toString()
+            Settings.Secure.putString(
+                appContext.contentResolver,
+                "theme_customization_overlay_packages",
+                overlayJson
+            )
+        }
     }
 
     fun loadTiles(installedApps: List<AppEntry>): List<TileItem> {
