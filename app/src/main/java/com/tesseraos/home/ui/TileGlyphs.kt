@@ -32,19 +32,19 @@ object TileGlyphs {
             p.contains("whatsapp") || p.contains("telegram") -> Icons.Outlined.Forum
             p.contains("messaging") || p.contains("mms") || p.contains("sms") || l.contains("mensag") -> Icons.Outlined.ChatBubbleOutline
             p.contains("mail") || p.contains("outlook") -> Icons.Outlined.MailOutline
-            p.contains("chrome") || p.contains("firefox") || p.contains("brave") || p.contains("browser") || p.contains("opera") -> Icons.Outlined.Language
-            p.contains("camera") || l.contains("câmera") || l.contains("camera") -> Icons.Outlined.CameraAlt
-            p.contains("photos") || p.contains("gallery") || l.contains("galeria") || l.contains("fotos") -> Icons.Outlined.PhotoLibrary
-            p.contains("spotify") || p.contains("music") || p.contains("ytmusic") || l.contains("música") -> Icons.Outlined.MusicNote
+            p.contains("chrome") || p.contains("firefox") || p.contains("brave") || p.contains("browser") || p.contains("opera") || p.contains("jelly") -> Icons.Outlined.Language
+            p.contains("camera") || p.contains("aperture") || l.contains("câmera") || l.contains("camera") -> Icons.Outlined.CameraAlt
+            p.contains("photos") || p.contains("gallery") || p.contains("glimpse") || l.contains("galeria") || l.contains("fotos") -> Icons.Outlined.PhotoLibrary
+            p.contains("spotify") || p.contains("music") || p.contains("ytmusic") || p.contains("twelve") || l.contains("música") -> Icons.Outlined.MusicNote
             p.contains("maps") || p.contains("waze") || l.contains("mapas") -> Icons.Outlined.Explore
-            p.contains("clock") || p.contains("alarm") || l.contains("relógio") -> Icons.Outlined.Alarm
-            p.contains("calendar") || l.contains("agenda") || l.contains("calendário") -> Icons.Outlined.CalendarMonth
+            p.contains("clock") || p.contains("alarm") || p.contains("deskclock") || l.contains("relógio") -> Icons.Outlined.Alarm
+            p.contains("calendar") || p.contains("etar") || l.contains("agenda") || l.contains("calendário") -> Icons.Outlined.CalendarMonth
             p.contains("calc") || l.contains("calculadora") -> Icons.Outlined.Calculate
             p.contains("contacts") || l.contains("contatos") -> Icons.Outlined.PeopleOutline
             p.contains("vending") || p.contains("aurora") || l.contains("store") || l.contains("loja") -> Icons.Outlined.ShoppingBag
             p.contains("settings") || l.contains("config") -> Icons.Outlined.Settings
             p.contains("files") || p.contains("documentsui") || l.contains("arquivos") -> Icons.Outlined.Folder
-            p.contains("notes") || p.contains("keep") || l.contains("notas") -> Icons.Outlined.Description
+            p.contains("notes") || p.contains("keep") || p.contains("recorder") || l.contains("notas") -> Icons.Outlined.Description
             p.contains("weather") || l.contains("clima") || l.contains("tempo") -> Icons.Outlined.Cloud
             p.contains("youtube") || p.contains("vlc") || p.contains("video") -> Icons.Outlined.PlayArrow
             p.contains("termux") || p.contains("terminal") -> Icons.Outlined.Terminal
